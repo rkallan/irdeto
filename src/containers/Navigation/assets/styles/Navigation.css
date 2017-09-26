@@ -1,0 +1,40 @@
+.container[data-component~='navigation'] {
+  grid-area: 'navigation';
+  grid-column-start: 2;
+  grid-column-end: 12;
+  grid-row-start: 1;
+  grid-row-end: 1; }
+  .container[data-component~='navigation'] ul {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0; }
+    .container[data-component~='navigation'] ul .navigation-item {
+      list-style: none;
+      text-align: center; }
+      .container[data-component~='navigation'] ul .navigation-item .navigation-link {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 48px;
+        font-weight: 400;
+        padding: 0 10px;
+        text-decoration: none;
+        color: #ffffff;
+        transition-property: font-weight, color;
+        transition-duration: 0.5s;
+        transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.4);
+        transition-delay: 0s; }
+        .container[data-component~='navigation'] ul .navigation-item .navigation-link:after {
+          display: block;
+          content: attr(data-nav-title);
+          font-weight: 800;
+          height: 1px;
+          color: transparent;
+          overflow: hidden;
+          visibility: hidden; }
+        .container[data-component~='navigation'] ul .navigation-item .navigation-link:hover {
+          font-weight: 800;
+          color: blue; }
+        .container[data-component~='navigation'] ul .navigation-item .navigation-link.is-active {
+          font-weight: 900;
+          color: #ff0000; }

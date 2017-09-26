@@ -1,0 +1,55 @@
+.container {
+    &[data-component~='navigation'] {
+        grid-area: 'navigation';
+        grid-column-start: 2; 
+        grid-column-end: 12; 
+        grid-row-start: 1; 
+        grid-row-end: 1; 
+
+        ul {
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            .navigation-item {
+                list-style: none;
+                text-align: center;
+                
+                .navigation-link {
+                    display: block;
+                    font-size: 1.8rem;
+                    line-height: 48px;
+                    font-weight: 400;
+                    padding: 0 10px;
+                    text-decoration: none;
+                    color: #ffffff;
+    
+                    transition-property: font-weight, color;
+                    transition-duration: 0.5s;
+                    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.4);
+                    transition-delay: 0s;  
+    
+                    &:after {
+                        display:block;
+                        content:attr(data-nav-title);
+                        font-weight:800;
+                        height:1px;
+                        color:transparent;
+                        overflow:hidden;
+                        visibility:hidden;  
+                    }
+    
+                    &:hover {
+                        font-weight: 800;
+                        color: blue;
+                    }
+    
+                    &.is-active {
+                        font-weight: 900;
+                        color: #ff0000;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+.container {
+    &[data-component~='footer'] {
+        grid-area: footer;
+    }
+}

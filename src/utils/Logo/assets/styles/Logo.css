@@ -1,0 +1,13 @@
+.container[data-component~='logo'] {
+  display: grid;
+  grid-area: 'logo';
+  grid-column-start: 1;
+  grid-column-end: 1; }
+  .container[data-component~='logo'] .link {
+    display: inline-block;
+    line-height: 0; }
+    .container[data-component~='logo'] .link:focus {
+      padding: 0;
+      background: transparent; }
+    .container[data-component~='logo'] .link .image {
+      height: 50px; }

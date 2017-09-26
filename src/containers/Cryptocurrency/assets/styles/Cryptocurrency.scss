@@ -1,0 +1,26 @@
+@import 'assets/styles/utils/utils';
+
+.currency-data {
+    width: 100%;
+
+    th, td {
+        line-height: 2.6;
+        text-align: left;
+        @include setPropWithRemAndPx(map-get($grid, gutter), (padding-left, padding-right));
+    }
+
+    th {
+        font-weight: bold;
+        color: $color-blue;
+    }
+
+    td {
+        
+    }
+
+    tbody {
+        tr:nth-child(odd) {
+            background: $color-grey-transparent;
+        }
+    }
+}

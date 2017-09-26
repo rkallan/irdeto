@@ -1,0 +1,14 @@
+.currency-data {
+  width: 100%; }
+  .currency-data th, .currency-data td {
+    line-height: 2.6;
+    text-align: left;
+    padding-left: 20px;
+    padding-left: 1.25rem;
+    padding-right: 20px;
+    padding-right: 1.25rem; }
+  .currency-data th {
+    font-weight: bold;
+    color: #336699; }
+  .currency-data tbody tr:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.3); }

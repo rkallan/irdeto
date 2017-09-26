@@ -1,0 +1,16 @@
+@import 'assets/styles/utils/utils';
+
+.container {
+  &[data-component~='header'] {
+    grid-area: header;
+    background: $color-grey;
+    @include setPropWithRemAndPx(map-get($grid, gutter), (padding-top, padding-bottom));
+    color: $color-white;
+    text-align: center;
+  
+    .title {
+      @include setPropWithRemAndPx(map-get($grid, gutter), margin-top);
+      text-align: left;
+    }
+  }
+}

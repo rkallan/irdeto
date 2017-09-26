@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i');
+
+html {
+	font-family: $fontFamily;
+	font-size: $docFontSize;
+	line-height: 1.5;
+	color: $color-grey;
+	overflow-y: scroll;
+}
+
+body {
+	box-sizing: border-box;
+	@include setPropWithRemAndPx($bodyTextFontSize, font-size);
+	line-height: 1.5;
+}
+
+[accessibility*="mouse"],
+[accessibility*="touch"] {
+	:focus{
+		outline:0;
+		text-decoration: none;
+		background-color: transparent;
+	}
+}
+
+.container {
+	position: relative;
+	width: 100%;
+	@include setPropWithRemAndPx(map-get($grid, gutter), margin-bottom);
+	
+	@extend %clearfix;
+	
+	&[variant~='content'] {
+		&.row {
+			box-sizing: border-box;
+			@include setPropWithRemAndPx(map-get($grid, gutter), (padding-left, padding-right));
+		
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+	
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&[data-component~='main'] {
+		grid-area: main;
+	}
+}
+
+.row {
+	.col {
+		&[variant~='pos-right'] {
+			float: right;
+		}
+	}
+}
+
+[state~="hidden"] {
+	@include opacity(0);
+	@extend  %visuallyhidden;
+}
+
+[state~="active"] {
+	@include opacity(1);
+	@extend  %visuallyShow;
+}
+
+label {
+	cursor: pointer;
+}
+
+button {
+	cursor: pointer;
+}
+
+.root {
+	height: 100%;
+}

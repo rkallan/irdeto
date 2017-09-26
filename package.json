@@ -1,0 +1,40 @@
+{
+  "name": "create-react-app-intro",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "aphrodite": "^1.2.3",
+    "flow-bin": "^0.54.1",
+    "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-helmet": "^5.2.0",
+    "react-moment": "^0.6.5",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.2",
+    "react-router-redux": "next",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^2.5.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "prettier": "^1.7.0",
+    "react-scripts": "1.0.10"
+  },
+  "scripts": {
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "flow": "flow",
+    "eject": "react-scripts eject"
+  }
+}

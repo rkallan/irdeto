@@ -1,2 +1,8 @@
 .container[data-component~='footer'] {
-  grid-area: footer; }
+  background: #fc0000;
+  padding-top: 20px;
+  padding-top: 1.25rem;
+  padding-bottom: 20px;
+  padding-bottom: 1.25rem; }
+  .container[data-component~='footer'] p {
+    color: white; }

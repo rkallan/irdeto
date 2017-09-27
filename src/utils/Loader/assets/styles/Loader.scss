@@ -1,0 +1,83 @@
+@import 'assets/styles/utils/utils';
+
+$loaderWidth: 360px;
+$loaderDotSize: 36px;
+
+.container {
+  &[data-component~='loader'] {
+    .loader {
+      margin: auto;
+      @include setPropWithRemAndPx(20, (width: $loaderWidth, height: $loaderDotSize, margin-top: 20, margin-bottom: 20));
+      
+      &--dot {
+        position: absolute;
+        border-radius: 100%;
+        border: 2px solid $color-white; 
+        background-color: $color-black;
+        @include setPropWithRemAndPx(20, (height: $loaderDotSize, width: $loaderDotSize, border-width: 2 ));
+        @include animation(loader ease-in-out 3s infinite);
+        
+        &:first-child {
+          background-color: #8cc759;
+          animation-delay: 0.5s;
+        }
+        
+        &:nth-child(2) {
+          background-color: #8c6daf;
+          animation-delay: 0.4s;
+        }
+        
+        &:nth-child(3) {
+          background-color: #ef5d74;
+          animation-delay: 0.3s;
+        }
+        
+        &:nth-child(4) {
+          background-color: #f9a74b;
+          animation-delay: 0.2s;
+        }
+        
+        &:nth-child(5) {
+          background-color: #60beeb;
+          animation-delay: 0.1s;
+        }
+        
+        &:nth-child(6) {
+          background-color: #fbef5a;
+          animation-delay: 0s;
+        }
+      }
+     
+      &--text {
+        position: absolute;
+        top: 200%;
+        left: 0;
+        right: 0;
+        width: 4rem;
+        margin: auto;
+    
+        &:after {
+          content: "Loading";      
+          font-weight: bold;
+          @include animation(loading-text 3s infinite);
+        }
+      }
+  }
+
+}
+
+}
+
+@include keyframes(loader) {
+  15% {transform: translateX(0)}
+  45% {transform: translateX( $loaderWidth - $loaderDotSize ) }
+  65% {transform: translateX( $loaderWidth - $loaderDotSize )}
+  95% {transform: translateX(0)}
+}
+
+@include keyframes(loading-text) {
+    0% {content: "Loading" }
+    25% {content: "Loading." }
+    50% {content: "Loading.." }
+    75% {content: "Loading..." }
+}

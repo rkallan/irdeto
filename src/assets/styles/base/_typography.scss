@@ -57,7 +57,5 @@ a {
 	
 	&:focus {
 		text-decoration: underline;
-		background-color: $color-grey-transparent;
-		@include setPropWithRemAndPx(5, padding);
 	}
 }

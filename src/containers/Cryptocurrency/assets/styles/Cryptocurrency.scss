@@ -10,8 +10,9 @@
     }
 
     th {
+        @include setPropWithRemAndPx(18, font-size);
         font-weight: bold;
-        color: $color-blue;
+        color: $color-red;
     }
 
     td {
@@ -20,7 +21,8 @@
 
     tbody {
         tr:nth-child(odd) {
-            background: $color-grey-transparent;
+            color: $color-white;
+            background: $color-red-transparent;
         }
     }
 }

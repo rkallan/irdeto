@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import 'moment/locale/nl';
+import Select from '../../utils/Select/Select';
+import Loader from '../../utils/Loader/Loader';
 
 // NPM Modules
 import { Helmet } from "react-helmet";
@@ -14,71 +16,87 @@ import './assets/styles/Cryptocurrency.css';
 // Actions
 import { ExampleActions } from '../../redux/example';
 
+const selectOptions = {
+  lsk: 'Lisk (LSK)',
+  eth: 'Etherium (ETH)',
+  xmr: 'Monero (XMR)',
+  strat: 'StratisAudi (STRAT)',
+  bch: 'Bitcoin Cash (BCH)'  
+};
+
 class Cryptocurrency extends React.Component {
-  constructor() {
-  	super();
+  constructor(props) {
+    super(props);
+    
     this.state = { 
         currencyData:[],
         apiUrl: 'https://poloniex.com/public?command=returnChartData',
         apiUrlParams: {
           currencyPair: 'BTC_XMR',
-         start: Math.round((Date.now() - 24*60*60*1000)/1000),
-         end: Date.now(), 
-         period: 300
+          start: Math.round((Date.now() - 24*60*60*1000)/1000),
+          end: Date.now(), 
+          period: 300
         }
     };
+
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    let pair = 'BTC_' + event.target.value;
-    this.state = { 
-      currencyData:[],
-      apiUrl: 'https://poloniex.com/public?command=returnChartData',
-      apiUrlParams: {
-        currencyPair: pair,
-       start: Math.round((Date.now() - 24*60*60*1000)/1000),
-       end: Date.now(), 
-       period: 300
-      }
-    };
-    this.getData();
-  }
-
-  componentWillMount() {
-    this.getData();
-  }
-
   componentDidMount(){
-    this.timerID = setInterval(
-      () => this.autoUpdate(),
-      300000
+    this.setTimeOutInterval();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeoutInterval);
+  }
+
+  setTimeOutInterval() {
+    let currentDateTime = new Date()
+    let nextAutoUpdate = new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate(), currentDateTime.getHours(), (currentDateTime.getMinutes() - (currentDateTime.getMinutes() % 5)) + 6, 0, 0)
+    let intervalTime = nextAutoUpdate - currentDateTime;
+
+    this.setComponentState();
+
+    this.timeoutInterval = setTimeout(
+      () => this.setTimeOutInterval(),
+      intervalTime
     );
   }
 
-  shouldComponentUpdate() {
-    return true;
-  }
+  setComponentState(data) {
+    let currencyPair;
+    if (data && data.currencyPair) {
+      currencyPair = data.currencyPair;
+    } else {
+      currencyPair = this.state.apiUrlParams.currencyPair
+    }
 
-  autoUpdate() {
     this.setState({
-      currencyData:[],
-      apiUrl: 'https://poloniex.com/public?command=returnChartData',
       apiUrlParams: {
-        currencyPair: 'BTC_XMR',
+        currencyPair: currencyPair,
         start: Math.round((Date.now() - 24*60*60*1000)/1000),
         end: Date.now(), 
         period: 300
       }
-    })
-    this.getData();
+    }, this.setCurrencyData)
+   
   }
 
-  getData() {
-    let url = this.getUrl();
-  	fetch(url)
- 		.then(result => result.json())
-    .then(currencyData => this.setState({currencyData}))
+  setCurrencyData() {
+  	fetch(this.getUrl())
+ 		.then(result => {
+       return result.json()
+    }).then(currencyData => {
+      this.setState({
+        currencyData: currencyData
+      })
+    }).catch();
+  }
+
+  deleteAllCurrencyData() {
+    this.setState({
+      currencyData: []
+    });
   }
 
   getUrl() {
@@ -90,25 +108,29 @@ class Cryptocurrency extends React.Component {
     return url + '&' + query;
   }
 
+  handleChange(event) {
+    this.deleteAllCurrencyData();
+
+    let apiUrlParams = {
+      currencyPair: 'BTC_' + event.target.value.toUpperCase()
+    }
+
+    this.setComponentState(apiUrlParams);
+  }
+
   render() {
     return (
       <main className="container" data-component='main' data-page="cryptocurrency">
         <Helmet>
             <title>Crypto currency</title>
         </Helmet>
-
+        
         <div className='row'>
-        {}
-          <div className='col'>
-          <select onChange={this.handleChange} value={this.state.apiUrlParams.currencyPair.split('_')[1]}>
-            <option value="LSK">Lisk (LSK)</option>
-            <option value="ETH">Etherium (ETH)</option>
-            <option value="XMR">Monero (XMR)</option>
-            <option value="STRAT">StratisAudi (STRAT)</option>
-            <option value="BCH">Bitcoin Cash (BCH)</option>
-          </select>
+          <div className='col' data-grid-col='col-tablet-3-12'>
+            <Select onSelectChange={this.handleChange} selectedValue={this.state.apiUrlParams.currencyPair.split('_')[1].toLowerCase()} selectOptions={selectOptions} />
           </div>
         </div>
+        
         <div className='row'>
         { this.state.currencyData.length ? 
           <table className='currency-data'>
@@ -121,19 +143,20 @@ class Cryptocurrency extends React.Component {
               </tr>
             </thead>
             <tbody>
-            {this.state.currencyData.reverse().map(currencyData => 
+            {this.state.currencyData.map(currencyData => 
                 <tr key={currencyData.date}>
-                  <td><Moment unix tz='Europe/Amsterdam' locale='nl' format='dddd, D MMMM YYYY H:mm'>{ currencyData.date }</Moment></td>
-                  <td>{currencyData.high}</td>
-                  <td>{currencyData.low}</td>
-                  <td>{currencyData.volume}</td>
+                  <td><Moment unix tz='Europe/Amsterdam' locale='en' format='dddd, D MMMM YYYY H:mm'>{ currencyData.date }</Moment></td>
+                  <td>{currencyData.high.toFixed(12)}</td>
+                  <td>{currencyData.low.toFixed(12)}</td>
+                  <td>{currencyData.volume.toFixed(12)}</td>
                 </tr>
               ) 
             }
             </tbody>
           </table>
-          : <div>Loading</div>
-          }
+          : 
+          <Loader />
+        }
         </div>
       </main>
     );

@@ -1,5 +1,12 @@
+@import 'assets/styles/utils/utils';
+
 .container {
     &[data-component~='footer'] {
-        grid-area: footer;
+        background: $color-red;
+        @include setPropWithRemAndPx(map-get($grid, gutter), (padding-top, padding-bottom));
+
+        p {
+            color: $color-white;
+        }
     }
 }

@@ -1,0 +1,68 @@
+@import "assets/styles/utils/utils";
+
+.container {
+  &[data-component~="select"] {
+    position: relative;
+
+    .unit {
+      &:after {
+        content: "";
+        width: 0;
+        height: 0;
+        position: absolute;
+        pointer-events: none;
+        @include setPropWithRemAndPx(5, (border-width: 6, border-left-width: 7, border-right-width: 7, border-top: 8, right: 25 ));
+        border-color: transparent;
+        border-style: solid;
+        border-top-color: $color-black;
+        opacity: 0.5;
+        z-index: 10;
+        top: calc((100% - 14px) / 2 + 2px);
+      }
+
+      select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 100%;
+        @include setPropWithRemAndPx(10, (padding: 20, border-radius: 5, font-size: 18));
+        background: $color-yellow;
+        border: none;
+        cursor: pointer;
+
+        transition-property: background-color, color;
+        transition-duration: 0.2s;
+        transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.4);
+        transition-delay: 0s;
+
+        &::-ms-expand {
+          display: none;
+        }
+
+        &:not(:checked) {
+          font-weight: 700;
+          color: $color-black;
+        }
+
+        &:focus {
+          color: $color-white;  
+          background-color: $color-red;
+        }
+
+        &:hover {
+          color: $color-white;  
+          background-color: $color-red;
+        }
+
+        option {
+          cursor: pointer;
+          @include setPropWithRemAndPx(14, font-size);
+        }
+      }
+    }
+  }
+}
+
+select::-ms-expand {
+  display: none;
+}

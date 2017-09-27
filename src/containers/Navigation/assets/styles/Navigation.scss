@@ -1,11 +1,7 @@
+@import 'assets/styles/utils/utils';
+
 .container {
     &[data-component~='navigation'] {
-        grid-area: 'navigation';
-        grid-column-start: 2; 
-        grid-column-end: 12; 
-        grid-row-start: 1; 
-        grid-row-end: 1; 
-
         ul {
             display: flex;
             justify-content: center;
@@ -17,10 +13,10 @@
                 
                 .navigation-link {
                     display: block;
-                    font-size: 1.8rem;
-                    line-height: 48px;
+                    @include setPropWithRemAndPx(18px, font-size);
+                    @include setPropWithRemAndPx(50px, line-height);
+                    @include setPropWithRemAndPx(10px, (padding-left, padding-right));
                     font-weight: 400;
-                    padding: 0 10px;
                     text-decoration: none;
                     color: #ffffff;
     
@@ -41,12 +37,12 @@
     
                     &:hover {
                         font-weight: 800;
-                        color: blue;
+                        color: #0A0A0A;
                     }
     
                     &.is-active {
                         font-weight: 900;
-                        color: #ff0000;
+                        color: #3A3939;
                     }
                 }
             }
